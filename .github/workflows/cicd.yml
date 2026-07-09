@@ -9,25 +9,25 @@ jobs:
 
     runs-on: ubuntu-latest
 
-env:
-     API_KEY: ${{ secrets.API_KEY }}
+    env:
+        API_KEY: ${{ secrets.API_KEY }}
 
-steps:
-   - run: echo "Secret loaded successfully"
+    steps:
+        - run: echo "Secret loaded successfully"
 
-   - uses: actions/checkout@v4
+        - uses: actions/checkout@v4
 
-   - name: Print Hello
+        - name: Print Hello
 
-     run: echo "Hello GitHub Actions"
+          run: echo "Hello GitHub Actions"
 
-   - name: List files
+        - name: List files
 
-     run: ls -la
+          run: ls -la
 
-   - uses: actions/setup-python@v5
+        - uses: actions/setup-python@v5
 
-     with:
+          with:
              python-version: "3.12"
-
-   - run: python app.py
+   
+        - run: python app.py
