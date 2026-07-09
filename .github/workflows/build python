@@ -1,0 +1,70 @@
+name: Python CI Demo
+
+on:
+  push:
+    branches:
+      - main
+      - feature/**
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    env:
+      API_KEY: ${{ secrets.API_KEY }}
+
+    steps:
+      # Step 1: Download repository code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Install Python
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Step 3: Verify Python installation
+      - name: Show Python version
+        run: python --version
+
+      # Step 4: Install dependencies (if requirements.txt exists)
+      - name: Install dependencies
+        run: |
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          else
+            echo "No requirements.txt found"
+          fi
+
+      # Step 5: Run your application
+      - name: Run application
+        run: python app.py
+
+      # Step 6: Verify secret exists
+      - name: Check API Secret
+        run: |
+          if [ -z "$API_KEY" ]; then
+            echo "API_KEY is missing"
+            exit 1
+          else
+            echo "API_KEY is configured successfully"
+          fi
+
+      # Step 7: Save workflow information
+      - name: Create build log
+        run: |
+          echo "Workflow executed successfully" > build.log
+          echo "Run Number: $GITHUB_RUN_NUMBER" >> build.log
+          echo "Repository: $GITHUB_REPOSITORY" >> build.log
+
+      # Step 8: Upload artifact
+      - name: Upload build log
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log
+          path: build.log

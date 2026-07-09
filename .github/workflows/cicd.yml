@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    env:
+        API_KEY: ${{ secrets.API_KEY }}
+
+    steps:
+        - run: echo "Secret loaded successfully"
+
+        - uses: actions/checkout@v4
+
+        - name: Print Hello
+
+          run: echo "Hello GitHub Actions"
+
+        - name: List files
+
+          run: ls -la
+
+        - uses: actions/setup-python@v5
+
+          with:
+             python-version: "3.12"
+   
+        - run: python app.py
