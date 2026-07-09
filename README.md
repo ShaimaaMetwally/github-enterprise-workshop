@@ -1,5 +1,8 @@
 # github-enterprise-workshop
 
-.github
-    workflows
-        ci.yml
+This repository demonstrates:
+
+- Branch Protection
+- Pull Requests
+- GitHub Actions
+- GitHub Secrets
